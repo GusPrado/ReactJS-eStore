@@ -1,0 +1,43 @@
+import React, { Component } from 'react';
+
+import { MdAddShoppingCart } from 'react-icons/md'
+import api from '../../services/api'
+
+import { ProductList } from './styles';
+
+export default class Home extends Component {
+  state = {
+    products: []
+  }
+  
+  async componentDidMount() {
+      const res = await api.get('products')
+
+      this.setState({ products: res.data })
+  }
+  
+  render() {
+    const { products } = this.state
+  
+    <ProductList>
+      { products.map(product => (
+        <li key={product.id}>
+          <img src={product.image} alt={product.title} />
+              <strong>{product.title}</strong>
+              <span>{product.price}</span>
+              <button type="button">
+              <div>
+                  <MdAddShoppingCart size={16} color="#FFF" /> 3
+              </div>
+              <div>
+                  <MdAddShoppingCart size={16} color="#FFF" /> 3
+                </div>
+                <span>ADICIONAR AO CARRINHO</span>
+              </button>
+            </li>
+      ))}
+   </ProductList>
+  }
+}
+
+  
