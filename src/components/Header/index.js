@@ -1,23 +1,28 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
-import { MdShoppingBasket } from 'react-icons/md' //md = Material Design
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { MdShoppingBasket } from 'react-icons/md'; // md = Material Design
 
 import { Container, Cart } from './styles';
-import logo from '../../assets/images/logo_rocketshoes.svg'
+import logo from '../../assets/images/logo_rocketshoes.svg';
 
-export default function Header() {
-  return (
-    <Container>
-        <Link to="/">
-            <img src={logo} alt="Rocketshoes" />
-        </Link> 
+function Header({ cartSize }) {
+    return (
+        <Container>
+            <Link to="/">
+                <img src={logo} alt="Rocketshoes" />
+            </Link>
             <Cart to="/cart">
                 <div>
                     <strong>Meu carrinho</strong>
-                    <span>itens</span>
+                    <span>{cartSize} itens</span>
                 </div>
                 <MdShoppingBasket size={36} color="#FFF" />
             </Cart>
-    </Container>
-  );
+        </Container>
+    );
 }
+
+export default connect(state => ({
+    cartSize: state.cart.length,
+}))(Header);
